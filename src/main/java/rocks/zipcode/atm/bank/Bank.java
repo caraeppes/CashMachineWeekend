@@ -13,26 +13,32 @@ public class Bank {
     private Map<Integer, Account> accounts = new HashMap<>();
 
     public Bank() {
-        accounts.put(1000, new BasicAccount(new AccountData(
-                1000, "Example 1", "example1@gmail.com", 500.0
+        accounts.put(545353774, new BasicAccount(new AccountData(
+                545353774, "Cara Eppes", "bigD0ggggy@gmail.com", 5000000000.0
         )));
 
-        accounts.put(2000, new PremiumAccount(new AccountData(
-                2000, "Example 2", "example2@gmail.com", 200.0
+        accounts.put(246801357, new PremiumAccount(new AccountData(
+                246801357, "Sean Rowan", "seanyb0ii@yahoo.com", 200.0
         )));
-        accounts.put(3000, new BasicAccount(new AccountData(
-                3000, "Example 3", "example3@gmail.com", 100000.0
-        )));
-
-        accounts.put(4000, new PremiumAccount(new AccountData(
-                4000, "Example 4", "example4@gmail.com", 0.0
-        )));
-        accounts.put(5000, new BasicAccount(new AccountData(
-                5000, "Example 5", "example5@gmail.com", 20000.0
+        accounts.put(836592742, new BasicAccount(new AccountData(
+                836592742, "Zaina Cruz-King", "Zmoney$$$@gmail.com", 100000.0
         )));
 
-        accounts.put(6000, new PremiumAccount(new AccountData(
-                6000, "Example 6", "example6@gmail.com", 10000000.0
+        accounts.put(947252432, new PremiumAccount(new AccountData(
+                947252432, "Ashley Brown", "igottalottacASH@gmail.com", 0.0
+        )));
+        accounts.put(683294753, new BasicAccount(new AccountData(
+                683294753, "Michael Krohn", "mimis4lyfe@gmail.com", 20000.0
+        )));
+
+        accounts.put(174493326, new PremiumAccount(new AccountData(
+                174493326, "Brian Wong", "BriBriDaFlyGuy@gmail.com", 10000000.0
+        )));
+        accounts.put(632819323, new BasicAccount(new AccountData(
+                632819323, "Jim Coates", "pEaCeLuVnBeArDzZz@aol.com", 3434343.43
+        )));
+        accounts.put(295464425, new PremiumAccount(new AccountData(
+                295464425, "Charles Wilmer", "GnarShr3dderDude@comcast.net", 999.99
         )));
     }
 

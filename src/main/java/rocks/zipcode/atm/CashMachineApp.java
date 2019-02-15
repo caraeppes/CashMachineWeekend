@@ -40,6 +40,7 @@ public class CashMachineApp extends Application {
 
         // Text Area
         TextArea areaInfo = new TextArea();
+        areaInfo.setEditable(false);
 
         // Text
         Font font = new Font(28 );
@@ -90,26 +91,34 @@ public class CashMachineApp extends Application {
 
         // Deposit Button Action
         btnDeposit.setOnAction(e -> {
-            Double amount = Double.parseDouble(depositField.getText());
-            cashMachine.deposit(amount);
-            depositField.setText("");
-            String amountString = String.format("%1$,.2f", amount);
-            areaInfo.setText("Deposited $" + amountString + "\n\n" +cashMachine.toString());
+            try {
+                Double amount = Double.parseDouble(depositField.getText());
+                cashMachine.deposit(amount);
+                depositField.setText("");
+                String amountString = String.format("%1$,.2f", amount);
+                areaInfo.setText("Deposited $" + amountString + "\n\n" + cashMachine.toString());
+            } catch (NumberFormatException depositException){
+                areaInfo.setText("Invalid deposit amount.  Try again.\n\n" + cashMachine.toString());
+            }
         });
 
 
         // Withdraw Button Action
         btnWithdraw.setOnAction(e -> {
-            Double amount = Double.parseDouble(withdrawField.getText());
-            cashMachine.withdraw(amount);
-            withdrawField.setText("");
-            if (cashMachine.getWithdrawSuccess()) {
-                String amountString = String.format("%1$,.2f", amount);
-                areaInfo.setText("Withdrew $" + amountString + "\n\n" + cashMachine.toString());
-            } else {
-                areaInfo.setText(cashMachine.toString());
+            try {
+                Double amount = Double.parseDouble(withdrawField.getText());
+                cashMachine.withdraw(amount);
+                withdrawField.setText("");
+                if (cashMachine.getWithdrawSuccess()) {
+                    String amountString = String.format("%1$,.2f", amount);
+                    areaInfo.setText("Withdrew $" + amountString + "\n\n" + cashMachine.toString());
+                } else {
+                    areaInfo.setText(cashMachine.toString());
+                }
+                cashMachine.setWithdrawSuccess(false);
+            } catch (NumberFormatException withdrawException){
+                areaInfo.setText("Invalid withdrawal amount.  Try again.\n\n" + cashMachine.toString());
             }
-            cashMachine.setWithdrawSuccess(false);
         });
 
         // Exit Button Action
