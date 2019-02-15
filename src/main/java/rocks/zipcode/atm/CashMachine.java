@@ -33,7 +33,7 @@ public class CashMachine {
         );
     }
 
-    public void deposit(int amount) {
+    public void deposit(Double amount) {
         if (accountData != null) {
             tryCall(
                     () -> bank.deposit(accountData, amount),
@@ -42,7 +42,7 @@ public class CashMachine {
         }
     }
 
-    public void withdraw(int amount) {
+    public void withdraw(Double amount) {
         if (accountData != null) {
             if ((accountData.getBalance() - amount) >= 0){
                 withdrawSuccess = true;
@@ -76,7 +76,7 @@ public class CashMachine {
             return errorMessage + "\n" + accountData.toString();
         }
         if (accountData.getBalance() < 0){
-            return "Warning: Account has been overdrafted.\n" + accountData.toString();
+            return "Warning: Account has been overdrafted.\n\n" + accountData.toString();
         }
 
         else {

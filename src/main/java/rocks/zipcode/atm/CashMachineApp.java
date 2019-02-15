@@ -90,20 +90,22 @@ public class CashMachineApp extends Application {
 
         // Deposit Button Action
         btnDeposit.setOnAction(e -> {
-            int amount = Integer.parseInt(depositField.getText());
+            Double amount = Double.parseDouble(depositField.getText());
             cashMachine.deposit(amount);
             depositField.setText("");
-            areaInfo.setText("Deposited $" + amount + "\n\n" +cashMachine.toString());
+            String amountString = String.format("%1$,.2f", amount);
+            areaInfo.setText("Deposited $" + amountString + "\n\n" +cashMachine.toString());
         });
 
 
         // Withdraw Button Action
         btnWithdraw.setOnAction(e -> {
-            int amount = Integer.parseInt(withdrawField.getText());
+            Double amount = Double.parseDouble(withdrawField.getText());
             cashMachine.withdraw(amount);
             withdrawField.setText("");
             if (cashMachine.getWithdrawSuccess()) {
-                areaInfo.setText("Withdrew $" + amount + "\n\n" + cashMachine.toString());
+                String amountString = String.format("%1$,.2f", amount);
+                areaInfo.setText("Withdrew $" + amountString + "\n\n" + cashMachine.toString());
             } else {
                 areaInfo.setText(cashMachine.toString());
             }
@@ -176,7 +178,7 @@ public class CashMachineApp extends Application {
 
         gridpane.getChildren().addAll();
         vbox.getChildren().addAll(gridpane);
-        //vbox.setAlignment(Pos.CENTER);
+        vbox.setAlignment(Pos.CENTER);
         return vbox;
     }
 
