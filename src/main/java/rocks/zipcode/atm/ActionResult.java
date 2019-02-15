@@ -35,4 +35,7 @@ public class ActionResult<T> {
     public static <E> ActionResult<E> fail(String errorMessage) {
         return new ActionResult<E>(errorMessage);
     }
+
+
+
 }
