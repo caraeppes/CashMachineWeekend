@@ -2,6 +2,7 @@ package rocks.zipcode.atm;
 
 import rocks.zipcode.atm.bank.AccountData;
 import rocks.zipcode.atm.bank.Bank;
+import rocks.zipcode.atm.bank.PremiumAccount;
 
 import java.util.ArrayList;
 import java.util.function.Consumer;
@@ -15,6 +16,7 @@ public class CashMachine {
     private final Bank bank;
     private AccountData accountData = null;
     private String error = "";
+    private Boolean withdrawSuccess = false;
 
     public CashMachine(Bank bank) {
         this.bank = bank;
@@ -42,6 +44,14 @@ public class CashMachine {
 
     public void withdraw(int amount) {
         if (accountData != null) {
+            if ((accountData.getBalance() - amount) >= 0){
+                withdrawSuccess = true;
+            }
+            else if (bank.getAccounts().get(accountData.getId()) instanceof PremiumAccount) {
+                if ((accountData.getBalance() - amount) >= 100){
+                    withdrawSuccess = true;
+                }
+            }
             tryCall(
                     () -> bank.withdraw(accountData, amount),
                     update
@@ -98,5 +108,13 @@ public class CashMachine {
             accountNumbers.add(i);
         }
         return accountNumbers;
+    }
+
+    public Boolean getWithdrawSuccess() {
+        return withdrawSuccess;
+    }
+
+    public void setWithdrawSuccess(Boolean withdrawSuccess) {
+        this.withdrawSuccess = withdrawSuccess;
     }
 }
