@@ -8,13 +8,16 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import rocks.zipcode.atm.bank.AccountData;
 import rocks.zipcode.atm.bank.Bank;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import rocks.zipcode.atm.bank.BasicAccount;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * @author ZipCodeWilmington
@@ -38,7 +41,10 @@ public class CashMachineApp extends Application {
 
     private Parent createContent() {
 
-        final Boolean[] newAccount = {false};
+        String newAccountName = "";
+       // int newAccountNumber;
+        String newAccountEmail = "";
+        String newAccountType = "";
 
         // Vbox
         VBox vbox = new VBox(10);
@@ -48,6 +54,8 @@ public class CashMachineApp extends Application {
         // Text Area
         TextArea areaInfo = new TextArea();
         areaInfo.setEditable(false);
+        TextArea newAccountText = new TextArea();
+        newAccountText.setEditable(false);
 
         // Text
         Font font = new Font(28 );
@@ -79,6 +87,17 @@ public class CashMachineApp extends Application {
         btnNewAcct.setBorder(buttonBorder);
         btnNewAcct.setBackground(buttonBackground);
         btnNewAcct.setMinWidth(90);
+        // Create Account Button
+        Button btnCreateAcct = new Button("Create Account");
+        btnCreateAcct.setBorder(buttonBorder);
+        btnCreateAcct.setBackground(buttonBackground);
+        btnCreateAcct.setMinWidth(90);
+        // Back Button
+        Button btnBack = new Button("Back");
+        btnBack.setBorder(buttonBorder);
+        btnBack.setBackground(buttonBackground);
+        btnBack.setMinWidth(90);
+
 
         // Menu
         menuBar.setBackground(buttonBackground);
@@ -105,8 +124,13 @@ public class CashMachineApp extends Application {
         newAccountMenuBar.setBackground(buttonBackground);
         newAccountMenuBar.setBorder(buttonBorder);
         newAccountMenuBar.setMinWidth(150);
-        newAccountMenu.getItems().add(new MenuItem("Basic Account"));
-        newAccountMenu.getItems().add(new MenuItem("Premium Account"));
+        RadioMenuItem basicAccount = new RadioMenuItem("Basic Account");
+        RadioMenuItem premiumAccount = new RadioMenuItem("Premium Account");
+        ToggleGroup toggleGroup = new ToggleGroup();
+        toggleGroup.getToggles().add(basicAccount);
+        toggleGroup.getToggles().add(premiumAccount);
+        newAccountMenu.getItems().add(basicAccount);
+        newAccountMenu.getItems().add(premiumAccount);
         newAccountMenuBar.getMenus().add(newAccountMenu);
 
         // Deposit Button Action
@@ -150,6 +174,32 @@ public class CashMachineApp extends Application {
             areaInfo.setText("Thank you for using this Cash Machine!\nUse the menu to select another account.");
         });
 
+        // Create Account Button
+        btnCreateAcct.setOnAction(e -> {
+            Random r = new Random();
+            int newAccountNumber = r.nextInt(999999999 - 111111111) + 111111111;
+            if (basicAccount.isSelected()){
+                cashMachine.getBank().addAccount(newAccountNumber, nameField.getText(), emailField.getText(), 0.0, "basic");
+            }
+            if (premiumAccount.isSelected()){
+                cashMachine.getBank().addAccount(newAccountNumber, nameField.getText(), emailField.getText(), 0.0, "premium");
+            }
+            MenuItem newMenuItem = new MenuItem(String.valueOf(newAccountNumber));
+            menu.getItems().add(newMenuItem);
+            menu.getItems().add(new SeparatorMenuItem());
+            newMenuItem.setOnAction(event -> {
+                        currentAccount = Integer.parseInt(newMenuItem.getText());
+                        cashMachine.login(currentAccount);
+                        areaInfo.setText(cashMachine.toString());
+                        btnDeposit.setDisable(false);
+                        btnWithdraw.setDisable(false);
+                    });
+            newAccountText.setText("Thank you " + nameField.getText() + "!\nYou have successfully created a new account.\n" +
+                    "Your account number is " + newAccountNumber + ".\nClick 'back' to deposit money.");
+
+        });
+
+
 
 
         // GridPane
@@ -187,25 +237,25 @@ public class CashMachineApp extends Application {
         gridpane.add(btnNewAcct, 4, 2);
 
         // Deposit Field
-        GridPane.setColumnSpan(depositField, 30);
-        gridpane.add(depositField, 0, 4);
+        GridPane.setColumnSpan(depositField, 25);
+        gridpane.add(depositField, 2, 4);
 
         // Deposit Button
         GridPane.setColumnSpan(btnDeposit, 6);
         gridpane.add(btnDeposit, 12, 5);
 
         // Withdraw Field
-        GridPane.setColumnSpan(withdrawField, 30);
-        gridpane.add(withdrawField, 0, 7);
+        GridPane.setColumnSpan(withdrawField, 25);
+        gridpane.add(withdrawField, 2, 7);
 
         // Withdraw Button
         GridPane.setColumnSpan(btnWithdraw, 6);
         gridpane.add(btnWithdraw, 12, 8);
 
         // Display Text Area
-        GridPane.setColumnSpan(areaInfo, 30);
+        GridPane.setColumnSpan(areaInfo, 25);
         GridPane.setRowSpan(areaInfo, 5);
-        gridpane.add(areaInfo, 0 ,10);
+        gridpane.add(areaInfo, 2 ,10);
 
         // Exit Button
         GridPane.setColumnSpan(btnExit, 6);
@@ -217,6 +267,9 @@ public class CashMachineApp extends Application {
 
         // New Account Button Action
         btnNewAcct.setOnAction(e -> {
+            depositField.clear();
+            withdrawField.clear();
+            areaInfo.clear();
             gridpane.getChildren().clear();
 
             gridpane.add(title,8,0);
@@ -235,7 +288,38 @@ public class CashMachineApp extends Application {
             GridPane.setColumnSpan(emailField, 20);
             gridpane.add(emailField, 4, 6);
 
+            // Create Account Button
+            GridPane.setColumnSpan(btnCreateAcct, 10);
+            gridpane.add(btnCreateAcct,11, 8);
+
+            // New Account Text Area
+            GridPane.setColumnSpan(newAccountText, 20);
+            GridPane.setRowSpan(newAccountText, 5);
+            gridpane.add(newAccountText, 4 ,10);
+
+            // Back Button
+            GridPane.setColumnSpan(btnBack, 6);
+            gridpane.add(btnBack, 12, 16);
+
             newAccountMenuBar.requestFocus();
+        });
+
+        // Back Button Action
+        btnBack.setOnAction(e -> {
+            nameField.clear();
+            emailField.clear();
+            newAccountText.clear();
+            gridpane.getChildren().clear();
+            gridpane.add(title,8,0);
+            gridpane.add(menuBar, 18,2);
+            gridpane.add(btnNewAcct, 4, 2);
+            gridpane.add(depositField, 2, 4);
+            gridpane.add(btnDeposit, 12, 5);
+            gridpane.add(withdrawField, 2, 7);
+            gridpane.add(btnWithdraw, 12, 8);
+            gridpane.add(areaInfo, 2 ,10);
+            gridpane.add(btnExit, 12, 16);
+
         });
 
 

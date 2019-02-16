@@ -42,6 +42,17 @@ public class Bank {
         )));
     }
 
+    public void addAccount(int id, String name, String email, Double balance, String accountType) {
+        if (accountType.equals("basic")){
+            accounts.put(id, new BasicAccount(new AccountData(
+                    id, name, email, balance)));
+        }
+        if (accountType.equals("premium")) {
+            accounts.put(id, new PremiumAccount(new AccountData(
+                    id, name, email, balance)));
+        }
+    }
+
 
     public ActionResult<AccountData> getAccountById(int id) {
         Account account = accounts.get(id);
