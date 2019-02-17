@@ -8,7 +8,6 @@ public final class AccountData {
     private final int id;
     private final String name;
     private final String email;
-
     private final Double balance;
 
     AccountData(int id, String name, String email, Double balance) {

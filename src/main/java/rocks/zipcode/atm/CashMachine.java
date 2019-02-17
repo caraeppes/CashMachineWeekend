@@ -117,10 +117,6 @@ public class CashMachine {
         return accountNumbers;
     }
 
-    public Bank getBank() {
-        return bank;
-    }
-
     public Boolean getWithdrawSuccess() {
         return withdrawSuccess;
     }
