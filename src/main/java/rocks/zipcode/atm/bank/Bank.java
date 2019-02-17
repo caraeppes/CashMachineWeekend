@@ -25,7 +25,7 @@ public class Bank {
         )));
 
         accounts.put(947252432, new PremiumAccount(new AccountData(
-                947252432, "Ashley Brown", "igottalottacASH@gmail.com", 0.0
+                947252432, "Ashley Smith", "igottalottacASH@gmail.com", 0.0
         )));
         accounts.put(683294753, new BasicAccount(new AccountData(
                 683294753, "Michael Krohn", "mimis4lyfe@gmail.com", 20000.0
@@ -42,7 +42,8 @@ public class Bank {
         )));
     }
 
-    public void addAccount(int id, String name, String email, Double balance, String accountType) {
+
+    public ActionResult<AccountData> addAccount (int id, String name, String email, Double balance, String accountType) {
         if (accountType.equals("basic")){
             accounts.put(id, new BasicAccount(new AccountData(
                     id, name, email, balance)));
@@ -51,6 +52,11 @@ public class Bank {
             accounts.put(id, new PremiumAccount(new AccountData(
                     id, name, email, balance)));
         }
+
+        Account newAccount = accounts.get(id);
+
+        return ActionResult.success(newAccount.getAccountData());
+
     }
 
 

@@ -57,6 +57,7 @@ public class CashMachineApp extends Application {
         title.setFill(Color.PURPLE);
         title.setFont(font);
 
+
         // Buttons
         Background buttonBackground = new Background(new BackgroundFill(Color.MEDIUMPURPLE, CornerRadii.EMPTY, Insets.EMPTY));
         Border buttonBorder = new Border(new BorderStroke(Paint.valueOf(Color.PURPLE.toString()), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
@@ -248,10 +249,10 @@ public class CashMachineApp extends Application {
                 Random r = new Random();
                 int newAccountNumber = r.nextInt(999999999 - 111111111) + 111111111;
                 if (basicAccount.isSelected()) {
-                    cashMachine.getBank().addAccount(newAccountNumber, nameField.getText(), emailField.getText(), 0.0, "basic");
+                    cashMachine.addNewAccount(newAccountNumber,  nameField.getText(), emailField.getText(), 0.0, "basic");
                 }
                 if (premiumAccount.isSelected()) {
-                    cashMachine.getBank().addAccount(newAccountNumber, nameField.getText(), emailField.getText(), 0.0, "premium");
+                    cashMachine.addNewAccount(newAccountNumber, nameField.getText(), emailField.getText(), 0.0, "premium");
                 }
                 MenuItem newMenuItem = new MenuItem(String.valueOf(newAccountNumber));
                 menu.getItems().add(newMenuItem);
