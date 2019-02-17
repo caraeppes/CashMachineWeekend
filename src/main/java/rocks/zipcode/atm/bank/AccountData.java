@@ -9,12 +9,14 @@ public final class AccountData {
     private final String name;
     private final String email;
     private final Double balance;
+    private final String pin;
 
-    AccountData(int id, String name, String email, Double balance) {
+    AccountData(int id, String name, String email, Double balance, String pin) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.balance = balance;
+        this.pin = pin;
     }
 
     public int getId() {
@@ -31,6 +33,10 @@ public final class AccountData {
 
     public Double getBalance() {
         return balance;
+    }
+
+    public String getPin() {
+        return pin;
     }
 
     @Override

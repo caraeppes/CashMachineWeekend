@@ -33,6 +33,13 @@ public class CashMachine {
         );
     }
 
+    public void checkPin(int id, String pin){
+        tryCall(
+                () -> bank.checkPin(id, pin),
+                update
+        );
+    }
+
     public void deposit(Double amount) {
         if (accountData != null) {
             tryCall(
@@ -59,9 +66,9 @@ public class CashMachine {
         }
     }
 
-    public void addNewAccount(int id, String name, String email, Double balance, String accountType){
+    public void addNewAccount(int id, String name, String email, Double balance, String accountType, String pin){
         tryCall(
-                () -> bank.addAccount(id,name, email, balance, accountType),
+                () -> bank.addAccount(id,name, email, balance, accountType, pin),
                 update
         );
     }
@@ -72,14 +79,21 @@ public class CashMachine {
         }
     }
 
+
     @Override
     public String toString() {
         if (accountData == null){
             return "Invalid account number";
         }
-        if (!error.equals("")){
+        if (error.equals("Error: Invalid PIN")){
+            String invalidPinError = error;
+            error = "";
+            return invalidPinError;
+        }
+         if (!error.equals("")){
             String errorMessage = error;
             error = "";
+
             return errorMessage + "\n" + accountData.toString();
         }
         if (accountData.getBalance() < 0){
@@ -123,5 +137,9 @@ public class CashMachine {
 
     public void setWithdrawSuccess(Boolean withdrawSuccess) {
         this.withdrawSuccess = withdrawSuccess;
+    }
+
+    public String getError(){
+        return error;
     }
 }

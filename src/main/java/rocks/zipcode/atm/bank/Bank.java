@@ -1,6 +1,7 @@
 package rocks.zipcode.atm.bank;
 
 import rocks.zipcode.atm.ActionResult;
+import rocks.zipcode.atm.CashMachine;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,43 +15,43 @@ public class Bank {
 
     public Bank() {
         accounts.put(545353774, new BasicAccount(new AccountData(
-                545353774, "Cara Eppes", "bigD0ggggy@gmail.com", 5000000000.0
+                545353774, "Cara Eppes", "bigD0ggggy@gmail.com", 5000000000.0, "1234"
         )));
 
         accounts.put(246801357, new PremiumAccount(new AccountData(
-                246801357, "Sean Rowan", "seanyb0ii@yahoo.com", 200.0
+                246801357, "Sean Rowan", "seanyb0ii@yahoo.com", 200.0, "1234"
         )));
         accounts.put(836592742, new BasicAccount(new AccountData(
-                836592742, "Zaina Cruz-King", "Zmoney$$$@gmail.com", 100000.0
+                836592742, "Zaina Cruz-King", "Zmoney$$$@gmail.com", 100000.0, "1234"
         )));
 
         accounts.put(947252432, new PremiumAccount(new AccountData(
-                947252432, "Ashley Smith", "igottalottacASH@gmail.com", 0.0
+                947252432, "Ashley Smith", "igottalottacASH@gmail.com", 0.0, "1234"
         )));
         accounts.put(683294753, new BasicAccount(new AccountData(
-                683294753, "Michael Krohn", "mimis4lyfe@gmail.com", 20000.0
+                683294753, "Michael Krohn", "mimis4lyfe@gmail.com", 20000.0, "1234"
         )));
 
         accounts.put(174493326, new PremiumAccount(new AccountData(
-                174493326, "Brian Wong", "BriBriDaFlyGuy@gmail.com", 10000000.0
+                174493326, "Brian Wong", "BriBriDaFlyGuy@gmail.com", 10000000.0, "1234"
         )));
         accounts.put(632819323, new BasicAccount(new AccountData(
-                632819323, "Jim Coates", "pEaCeLuVnBeArDzZz@aol.com", 3434343.43
+                632819323, "Jim Coates", "pEaCeLuVnBeArDzZz@aol.com", 3434343.43, "1234"
         )));
         accounts.put(295464425, new PremiumAccount(new AccountData(
-                295464425, "Charles Wilmer", "GnarShr3dderDude@comcast.net", 999.99
+                295464425, "Charles Wilmer", "GnarShr3dderDude@comcast.net", 999.99, "1234"
         )));
     }
 
 
-    public ActionResult<AccountData> addAccount (int id, String name, String email, Double balance, String accountType) {
+    public ActionResult<AccountData> addAccount (int id, String name, String email, Double balance, String accountType, String pin) {
         if (accountType.equals("basic")){
             accounts.put(id, new BasicAccount(new AccountData(
-                    id, name, email, balance)));
+                    id, name, email, balance, pin)));
         }
         if (accountType.equals("premium")) {
             accounts.put(id, new PremiumAccount(new AccountData(
-                    id, name, email, balance)));
+                    id, name, email, balance, pin)));
         }
 
         Account newAccount = accounts.get(id);
@@ -62,11 +63,21 @@ public class Bank {
 
     public ActionResult<AccountData> getAccountById(int id) {
         Account account = accounts.get(id);
-
         if (account != null) {
             return ActionResult.success(account.getAccountData());
         } else {
             return ActionResult.fail("Invalid Account Number");
+        }
+    }
+
+    public ActionResult<AccountData> checkPin(int id, String pin){
+        Account account = accounts.get(id);
+        System.out.println(account.getAccountData().getPin().equals(pin));
+        if (account.getAccountData().getPin().equals(pin)){
+            return ActionResult.success(account.getAccountData());
+        }
+        else {
+            return  ActionResult.fail("Invalid PIN");
         }
     }
 
@@ -89,6 +100,7 @@ public class Bank {
             return ActionResult.fail("Withdraw failed: $" + amountString + ". Account has: $" + balanceString + ".\n");
         }
     }
+
 
     public Map<Integer, Account> getAccounts(){
         return this.accounts;
