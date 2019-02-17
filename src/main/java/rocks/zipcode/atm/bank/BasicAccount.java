@@ -5,6 +5,10 @@ package rocks.zipcode.atm.bank;
  */
 public class BasicAccount extends Account {
 
+    /**
+     * BasicAccount is a constructor for a BasicAccount
+     * @param accountData - the AccountData for the BasicAccount
+     */
     public BasicAccount(AccountData accountData) {
         super(accountData);
     }

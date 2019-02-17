@@ -71,7 +71,10 @@ public class CashMachineApp extends Application {
     private PasswordField resetPinField = new PasswordField();
     private PasswordField confirmResetPinField = new PasswordField();
 
-
+    /**
+     * setGridPaneConstraints initializes the number of columns and rows for the GridPane and adds column and row restraints
+     * @param gridPane
+     */
     private void setGridPaneConstraints(GridPane gridPane) {
         int columns = 54;
         int rows = 20;
@@ -89,6 +92,9 @@ public class CashMachineApp extends Application {
     }
 
 
+    /**
+     * mainGridPaneSetUp is the method that adds all children to mainGridPane and sets their action responses
+     */
     private void mainGridPaneSetUp() {
 
         setGridPaneConstraints(mainGridPane);
@@ -129,6 +135,7 @@ public class CashMachineApp extends Application {
         pinHint.setFill(Color.GOLD);
         pinHint.setFont(Font.font("Verdana", FontWeight.BOLD, 11));
         mainGridPane.add(pinHint, 22, 5, 3, 1);
+
 
         // Pin Button
         pinHint.setDisable(true);
@@ -205,6 +212,7 @@ public class CashMachineApp extends Application {
         GridPane.setColumnSpan(btnEnterResetPin, 11);
         btnEnterResetPin.setPrefWidth(110);
 
+
         // Exit Button
         btnExit.setBorder(buttonBorder);
         btnExit.setBackground(buttonBackground);
@@ -276,7 +284,6 @@ public class CashMachineApp extends Application {
 
         // Enter Pin Button Action
         pinField.setOnMouseClicked(e -> pinHint.setVisible(true));
-
         btnPin.setOnAction(e -> {
              cashMachine.checkPin(currentAccount, pinField.getText());
              if (cashMachine.getError().equals("Error: Invalid PIN")){
@@ -328,11 +335,12 @@ public class CashMachineApp extends Application {
         });
     }
 
-
+    /**
+     * newAccountGridPaneSetUp is the method that adds all of the children and their action responses to the newAccountGridPane
+     */
     private void newAccountGridPaneSetUp() {
 
         setGridPaneConstraints(newAccountsGridPane);
-
 
         // Title Text
         title2.setFill(Color.GOLD);
@@ -457,6 +465,9 @@ public class CashMachineApp extends Application {
     }
 
 
+    /**
+     * vboxSetUp is a method that initializes the VBox and adds the currentGridPane
+     */
     private void vboxSetUp() {
         vbox.setPrefSize(250, 350);
         vbox.setBackground(new Background(new BackgroundFill(Color.LIGHTSEAGREEN, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -466,6 +477,9 @@ public class CashMachineApp extends Application {
     }
 
 
+    /**
+     * swithPanes is a method that toggles the currentGridPane and resets the VBox with the new currentGridPane
+     */
     private void switchPanes() {
         if (currentGridPane == mainGridPane) {
             currentGridPane = newAccountsGridPane;
@@ -477,6 +491,9 @@ public class CashMachineApp extends Application {
     }
 
 
+    /**
+     * accountMenuSetUp is a method tht adds all account numbers to the account menu and sets their action responses
+     */
     private void accountMenuSetUp() {
         menu.getItems().clear();
         ArrayList<MenuItem> menuItems = new ArrayList<>();
@@ -496,7 +513,10 @@ public class CashMachineApp extends Application {
     }
 
 
-    // createContent sets up vbox and all of its components
+    /**
+     * createContent is a method that calls the setUp methods for the VBox and GridPanes
+     * @return the set up VBox
+     */
     private Parent createContent() {
         mainGridPaneSetUp();
         newAccountGridPaneSetUp();
@@ -505,6 +525,11 @@ public class CashMachineApp extends Application {
     }
 
 
+    /**
+     * start is a method that create Scene with the VBox content and sets the Scene for the Stage
+     * @param stage - a Stage object for all Children objects
+     * @throws Exception
+     */
     @Override
     public void start(Stage stage) throws Exception {
         stage.setScene(new Scene(createContent()));
@@ -512,6 +537,10 @@ public class CashMachineApp extends Application {
     }
 
 
+    /**
+     * main is a method that launches the program
+     * @param args
+     */
     public static void main(String[] args) {
         launch(args);
     }
