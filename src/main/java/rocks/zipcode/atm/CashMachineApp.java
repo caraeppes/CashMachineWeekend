@@ -52,8 +52,8 @@ public class CashMachineApp extends Application {
         TextField emailField = new TextField("");
 
         // Text
-        Text title = new Text("Cara's Cash Machine");
-        Font font = new Font(26 );
+        Text title = new Text("CARA'S CA$H MACHINE");
+        Font font = new Font(28 );
         title.setFill(Color.PURPLE);
         title.setFont(font);
 
@@ -116,7 +116,6 @@ public class CashMachineApp extends Application {
         // New Account Menu
         newAccountMenuBar.setBackground(buttonBackground);
         newAccountMenuBar.setBorder(buttonBorder);
-        //newAccountMenuBar.setMinWidth(150);
         RadioMenuItem basicAccount = new RadioMenuItem("Basic Account");
         RadioMenuItem premiumAccount = new RadioMenuItem("Premium Account");
         ToggleGroup toggleGroup = new ToggleGroup();
@@ -131,7 +130,7 @@ public class CashMachineApp extends Application {
         // GridPane
         GridPane gridpane = new GridPane();
         gridpane.setAlignment(Pos.TOP_CENTER);
-        final int columns = 60;
+        final int columns = 54;
         final int rows = 16;
 
         // set ColumnConstraints
@@ -151,43 +150,43 @@ public class CashMachineApp extends Application {
         // Title Text
         GridPane.setColumnSpan(title, 36);
         GridPane.setRowSpan(title, 2);
-        gridpane.add(title,15,0);
+        gridpane.add(title,12,0);
 
         // Menu Bar
-        GridPane.setColumnSpan(menuBar, 20);
-        gridpane.add(menuBar, 27,2);
+        GridPane.setColumnSpan(menuBar, 18);
+        gridpane.add(menuBar, 24,2);
 
         // New Account Button
         GridPane.setColumnSpan(btnNewAcct, 22);
-        gridpane.add(btnNewAcct,13, 2);
+        gridpane.add(btnNewAcct,12, 2);
 
         // Deposit Field
         depositField.setPromptText("Enter amount to deposit");
-        GridPane.setColumnSpan(depositField, 25);
-        gridpane.add(depositField, 13, 4);
+        GridPane.setColumnSpan(depositField, 26);
+        gridpane.add(depositField, 11, 4);
 
         // Deposit Button
          GridPane.setColumnSpan(btnDeposit, 20);
-        gridpane.add(btnDeposit, 39, 4);
+        gridpane.add(btnDeposit, 37, 4);
 
         // Withdraw Field
         withdrawField.setPromptText("Enter amount to withdraw");
-        GridPane.setColumnSpan(withdrawField, 24);
-        gridpane.add(withdrawField, 13, 6);
+        GridPane.setColumnSpan(withdrawField, 25);
+        gridpane.add(withdrawField, 11, 6);
 
         // Withdraw Button
         GridPane.setColumnSpan(btnWithdraw, 15);
-        gridpane.add(btnWithdraw, 38, 6);
+        gridpane.add(btnWithdraw, 36, 6);
 
         // Display Text Area
-        GridPane.setColumnSpan(areaInfo, 46);
+        GridPane.setColumnSpan(areaInfo, 42);
         GridPane.setRowSpan(areaInfo, 4);
-        gridpane.add(areaInfo, 7 ,8);
+        gridpane.add(areaInfo, 6 ,8);
         areaInfo.requestFocus();
 
         // Exit Button
         GridPane.setColumnSpan(btnExit, 10);
-        gridpane.add(btnExit, 27, 13);
+        gridpane.add(btnExit, 25, 13);
 
         // Deposit Button Action
         btnDeposit.setOnAction(e -> {
@@ -226,7 +225,12 @@ public class CashMachineApp extends Application {
             btnDeposit.setDisable(true);
             btnWithdraw.setDisable(true);
 
-            areaInfo.setText("Thank you for using this Cash Machine!\nUse the menu to select another account.");
+            areaInfo.setText("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n" +
+                    "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n" +
+                    "$$$$$$$$$$  Thank you for using this Cash Machine!   $$$$$$$$$$\n" +
+                    "$$$$$$$$$$  Use the menu to select another account  $$$$$$$$$$\n" +
+                    "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n" +
+                    "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
         });
 
         // Create Account Button
@@ -270,34 +274,36 @@ public class CashMachineApp extends Application {
             withdrawField.clear();
             areaInfo.clear();
             gridpane.getChildren().clear();
-            gridpane.add(title,15,0);
+
+            //gridpane.setGridLinesVisible(true);
+            gridpane.add(title,12,0);
 
             // Account Type Menu Bar
-            GridPane.setColumnSpan(newAccountMenuBar, 34);
-            gridpane.add(newAccountMenuBar, 13,2);
+            GridPane.setColumnSpan(newAccountMenuBar, 30);
+            gridpane.add(newAccountMenuBar, 12,2);
 
             // Name Field
             nameField.setPromptText("Full Name");
-            GridPane.setColumnSpan(nameField, 34);
-            gridpane.add(nameField, 13, 4);
+            GridPane.setColumnSpan(nameField, 30);
+            gridpane.add(nameField, 12, 4);
 
             // Email Field
             emailField.setPromptText("Email Address");
-            GridPane.setColumnSpan(emailField, 34);
-            gridpane.add(emailField, 13, 6);
+            GridPane.setColumnSpan(emailField, 30);
+            gridpane.add(emailField, 12, 6);
 
             // Create Account Button
-            GridPane.setColumnSpan(btnCreateAcct, 20);
-            gridpane.add(btnCreateAcct, 23, 8);
+            GridPane.setColumnSpan(btnCreateAcct, 19);
+            gridpane.add(btnCreateAcct, 22, 8);
 
             // New Account Text Area
-            GridPane.setColumnSpan(newAccountText, 46);
+            GridPane.setColumnSpan(newAccountText, 42);
             GridPane.setRowSpan(newAccountText, 3);
-            gridpane.add(newAccountText, 7 ,10);
+            gridpane.add(newAccountText, 6 ,10);
 
             // Back Button
             GridPane.setColumnSpan(btnBack, 9);
-            gridpane.add(btnBack, 27, 14);
+            gridpane.add(btnBack, 25, 14);
 
             newAccountMenuBar.requestFocus();
         });
@@ -309,15 +315,15 @@ public class CashMachineApp extends Application {
             newAccountText.clear();
             newAccountMenu.setText("Select an Account Type");
             gridpane.getChildren().clear();
-            gridpane.add(title,15,0);
-            gridpane.add(menuBar, 27,2);
-            gridpane.add(btnNewAcct, 13, 2);
-            gridpane.add(depositField, 13, 4);
-            gridpane.add(btnDeposit, 39, 4);
-            gridpane.add(withdrawField, 13, 6);
-            gridpane.add(btnWithdraw, 38, 6);
-            gridpane.add(areaInfo, 7 ,8);
-            gridpane.add(btnExit, 27, 13);
+            gridpane.add(title,12,0);
+            gridpane.add(menuBar, 24,2);
+            gridpane.add(btnNewAcct, 12, 2);
+            gridpane.add(depositField, 11, 4);
+            gridpane.add(btnDeposit, 37, 4);
+            gridpane.add(withdrawField, 11, 6);
+            gridpane.add(btnWithdraw, 36, 6);
+            gridpane.add(areaInfo, 6 ,8);
+            gridpane.add(btnExit, 25, 13);
 
         });
 
