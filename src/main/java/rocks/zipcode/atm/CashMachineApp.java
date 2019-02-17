@@ -56,6 +56,8 @@ public class CashMachineApp extends Application {
     private Button btnCreateAcct = new Button("Create Account");
     private Button btnBack = new Button("Back");
     private Button btnPin = new Button("Enter");
+    private Button btnResetPin = new Button("Reset PIN");
+    private Button btnEnterResetPin = new Button("Reset PIN");
 
     private Text title = new Text("CARA-CA$H MACHINE");
     private Text title2 = new Text("NEW CARA-CA$H ACCOUNT");
@@ -65,6 +67,9 @@ public class CashMachineApp extends Application {
 
     private PasswordField pinField = new PasswordField();
     private PasswordField setPinField = new PasswordField();
+    private PasswordField confirmPinField = new PasswordField();
+    private PasswordField resetPinField = new PasswordField();
+    private PasswordField confirmResetPinField = new PasswordField();
 
 
     private void setGridPaneConstraints(GridPane gridPane) {
@@ -91,14 +96,14 @@ public class CashMachineApp extends Application {
         // Title Text
         title.setFill(Color.GOLD);
         title.setFont(Font.font("Verdana", FontWeight.BOLD, 27));
-        mainGridPane.add(title, 14, 0, 5, 2);
+        mainGridPane.add(title, 15, 0, 5, 2);
 
 
         // New Account Button
         btnNewAcct.setBorder(buttonBorder);
         btnNewAcct.setBackground(buttonBackground);
         GridPane.setColumnSpan(btnNewAcct, 22);
-        btnNewAcct.setPrefWidth(155.0);
+        btnNewAcct.setPrefWidth(160.0);
         mainGridPane.add(btnNewAcct, 12, 2);
 
 
@@ -130,7 +135,7 @@ public class CashMachineApp extends Application {
         btnPin.setBorder(buttonBorder);
         btnPin.setBackground(buttonBackground);
         GridPane.setColumnSpan(btnPin, 10);
-        btnPin.setPrefWidth(70);
+        btnPin.setPrefWidth(80);
         mainGridPane.add(btnPin, 29, 4);
 
 
@@ -146,7 +151,7 @@ public class CashMachineApp extends Application {
         btnDeposit.setBorder(buttonBorder);
         btnDeposit.setBackground(buttonBackground);
         GridPane.setColumnSpan(btnDeposit, 12);
-        btnDeposit.setPrefWidth(88);
+        btnDeposit.setPrefWidth(95);
         mainGridPane.add(btnDeposit, 36, 6);
 
 
@@ -162,7 +167,7 @@ public class CashMachineApp extends Application {
         btnWithdraw.setBorder(buttonBorder);
         btnWithdraw.setBackground(buttonBackground);
         GridPane.setColumnSpan(btnWithdraw, 12);
-        btnWithdraw.setPrefWidth(88);
+        btnWithdraw.setPrefWidth(95);
         mainGridPane.add(btnWithdraw, 36, 8);
 
 
@@ -174,12 +179,38 @@ public class CashMachineApp extends Application {
         areaInfo.requestFocus();
 
 
+        // Reset Pin Button
+        btnResetPin.setDisable(true);
+        btnResetPin.setBorder(buttonBorder);
+        btnResetPin.setBackground(buttonBackground);
+        GridPane.setColumnSpan(btnResetPin, 12);
+        btnResetPin.setPrefWidth(120);
+        mainGridPane.add(btnResetPin,22, 15);
+
+
+        // Reset Pin Field
+        resetPinField.setPromptText("Enter new 4 digit PIN");
+        GridPane.setColumnSpan(resetPinField, 11);
+
+
+        // Confirm Reset Pin Field
+        confirmResetPinField.setPromptText("Confirm new PIN");
+        GridPane.setColumnSpan(confirmResetPinField, 11);
+
+
+        // Reset Pin Enter Button
+        btnEnterResetPin.setDisable(true);
+        btnEnterResetPin.setBorder(buttonBorder);
+        btnEnterResetPin.setBackground(buttonBackground);
+        GridPane.setColumnSpan(btnEnterResetPin, 11);
+        btnEnterResetPin.setPrefWidth(110);
+
         // Exit Button
         btnExit.setBorder(buttonBorder);
         btnExit.setBackground(buttonBackground);
         GridPane.setColumnSpan(btnExit, 10);
         btnExit.setPrefWidth(97);
-        mainGridPane.add(btnExit, 23, 15);
+        mainGridPane.add(btnExit, 23, 17);
 
 
         // Deposit Button Action
@@ -225,12 +256,12 @@ public class CashMachineApp extends Application {
             btnPin.setDisable(true);
             withdrawField.setDisable(true);
             depositField.setDisable(true);
-            areaInfo.setText("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n" +
-                    "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n" +
-                    "$$$$$$$$$$$$$  Thank you for using this Cash Machine!  $$$$$$$$$$$$$\n" +
-                    "$$$$$$$$$$$$$  Use the menu to select another account  $$$$$$$$$$$$$\n" +
-                    "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n" +
-                    "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+            areaInfo.setText("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n" +
+                    "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n" +
+                    "$$$$$$$$$$$$$$$  Thank you for using this Cash Machine!  $$$$$$$$$$$$$$$\n" +
+                    "$$$$$$$$$$$$$$$  Use the menu to select another account  $$$$$$$$$$$$$$$\n" +
+                    "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n" +
+                    "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
         });
 
 
@@ -262,8 +293,38 @@ public class CashMachineApp extends Application {
                  btnDeposit.setDisable(false);
                  pinField.setDisable(true);
                  btnPin.setDisable(true);
+                 btnResetPin.setDisable(false);
                  areaInfo.requestFocus();
              }
+        });
+
+
+        // Reset PIN Button Action
+        btnResetPin.setOnAction(event -> {
+            mainGridPane.getChildren().remove(btnResetPin);
+            mainGridPane.add(resetPinField, 10, 15);
+            mainGridPane.add(confirmResetPinField, 23, 15);
+            mainGridPane.add(btnEnterResetPin, 36, 15);
+            btnEnterResetPin.setDisable(false);
+        });
+
+
+        // Reset PIN Enter Button Action
+        btnEnterResetPin.setOnAction(event -> {
+            if (resetPinField.getText().length() != 4){
+                areaInfo.setText("PIN must be 4 digits");
+            }
+            else if (!resetPinField.getText().equals(confirmResetPinField.getText())){
+                areaInfo.setText("PINs do not match.  Try again.");
+            }
+            else {
+                cashMachine.resetPin(currentAccount,resetPinField.getText());
+                areaInfo.setText("Pin has been reset.\n" + cashMachine.toString());
+                resetPinField.setText("");
+                confirmResetPinField.setText("");
+                mainGridPane.getChildren().removeAll(resetPinField, confirmResetPinField, btnEnterResetPin);
+                mainGridPane.getChildren().add(btnResetPin);
+            }
         });
     }
 
@@ -298,20 +359,26 @@ public class CashMachineApp extends Application {
         GridPane.setColumnSpan(setPinField, 10);
         newAccountsGridPane.add(setPinField, 22, 8);
 
+
+        // Confirm Pin Field
+        confirmPinField.setPromptText("Confirm PIN");
+        GridPane.setColumnSpan(confirmPinField, 10);
+        newAccountsGridPane.add(confirmPinField, 22, 10);
+
         // Create Account Button
         btnCreateAcct.setBorder(buttonBorder);
         btnCreateAcct.setBackground(buttonBackground);
         GridPane.setColumnSpan(btnCreateAcct, 19);
         btnCreateAcct.setPrefWidth(180);
-        newAccountsGridPane.add(btnCreateAcct, 20, 10);
+        newAccountsGridPane.add(btnCreateAcct, 20, 12);
 
 
         // New Account Text Area
         newAccountText.setEditable(false);
         GridPane.setColumnSpan(newAccountText, 30);
-        GridPane.setRowSpan(newAccountText, 4);
+        GridPane.setRowSpan(newAccountText, 3);
         newAccountText.setPrefColumnCount(40);
-        newAccountsGridPane.add(newAccountText, 12, 12);
+        newAccountsGridPane.add(newAccountText, 12, 14);
 
 
         // Back Button
@@ -319,7 +386,7 @@ public class CashMachineApp extends Application {
         btnBack.setBackground(buttonBackground);
         GridPane.setColumnSpan(btnBack, 14);
         btnBack.setPrefWidth(155);
-        newAccountsGridPane.add(btnBack, 21, 17);
+        newAccountsGridPane.add(btnBack, 21, 18);
         newAccountMenuBar.requestFocus();
 
 
@@ -345,12 +412,19 @@ public class CashMachineApp extends Application {
         btnCreateAcct.setOnAction(e -> {
             if (nameField.getText().equals("")) {
                 newAccountText.setText("Please enter your name to create a new account.");
-            } else if (emailField.getText().equals("")) {
+            }
+            else if (emailField.getText().equals("")) {
                 newAccountText.setText("Please enter your email address to create a new account.");
-            } else if ((!basicAccount.isSelected()) && (!premiumAccount.isSelected())) {
+            }
+            else if ((!basicAccount.isSelected()) && (!premiumAccount.isSelected())) {
                 newAccountText.setText("Please select a basic or premium account.");
-            } else if(setPinField.getText().length() != 4) {
+            }
+            else if(setPinField.getText().length() != 4) {
                 newAccountText.setText("Please enter a 4 digit PIN");
+            }
+
+            else if (!setPinField.getText().equals(confirmPinField.getText())){
+                newAccountText.setText("PINs do not match.  Try again.");
             }
             else {
                 Random r = new Random();
@@ -365,6 +439,7 @@ public class CashMachineApp extends Application {
                 newAccountText.setText("Thank you " + nameField.getText() + "!\nYou have successfully created a new account.\n" +
                         "Your account number is " + newAccountNumber + ".\nClick 'back' to deposit money.");
                 setPinField.setText("");
+                confirmPinField.setText("");
             }
         });
 

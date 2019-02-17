@@ -40,4 +40,8 @@ public abstract class Account {
         accountData = new AccountData(accountData.getId(), accountData.getName(), accountData.getEmail(),
                 newBalance, accountData.getPin());
     }
+
+    public void setAccountData(AccountData accountData){
+        this.accountData = accountData;
+    }
 }

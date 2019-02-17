@@ -40,6 +40,13 @@ public class CashMachine {
         );
     }
 
+    public void resetPin(int id, String pin){
+        tryCall(
+                () -> bank.resetPin(id, pin),
+                update
+        );
+    }
+
     public void deposit(Double amount) {
         if (accountData != null) {
             tryCall(

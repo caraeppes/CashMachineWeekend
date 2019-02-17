@@ -72,13 +72,19 @@ public class Bank {
 
     public ActionResult<AccountData> checkPin(int id, String pin){
         Account account = accounts.get(id);
-        System.out.println(account.getAccountData().getPin().equals(pin));
         if (account.getAccountData().getPin().equals(pin)){
             return ActionResult.success(account.getAccountData());
         }
         else {
             return  ActionResult.fail("Invalid PIN");
         }
+    }
+
+    public ActionResult<AccountData> resetPin(int id, String pin){
+        Account account = accounts.get(id);
+        AccountData newAccountData = new AccountData(id, account.getAccountData().getName(), account.getAccountData().getEmail(), account.getBalance(), pin);
+        account.setAccountData(newAccountData);
+        return ActionResult.success(newAccountData);
     }
 
     public ActionResult<AccountData> deposit(AccountData accountData, Double amount) {
