@@ -49,6 +49,7 @@ public class CashMachineApp extends Application {
 
     private Border buttonBorder = new Border(new BorderStroke(Paint.valueOf(Color.PURPLE.toString()), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
 
+
     private Button btnDeposit = new Button("Deposit");
     private Button btnWithdraw = new Button("Withdraw");
     private Button btnExit = new Button("Exit");
@@ -124,6 +125,7 @@ public class CashMachineApp extends Application {
     private void mainGridPaneSetUp() {
 
         setGridPaneConstraints(mainGridPane);
+        //mainGridPane.setGridLinesVisible(true);
 
         // Title Text
         title.setFill(Color.GOLD);
@@ -200,7 +202,7 @@ public class CashMachineApp extends Application {
 
         // Reset Pin Button
         btnResetPin.setPrefWidth(120);
-        mainGridPane.add(btnResetPin, 22, 15);
+        mainGridPane.add(btnResetPin, 21, 15);
 
 
         // Reset Pin Field
@@ -218,8 +220,9 @@ public class CashMachineApp extends Application {
 
 
         // Exit Button
+        btnExit.setDisable(false);
         btnExit.setPrefWidth(97);
-        mainGridPane.add(btnExit, 23, 17);
+        mainGridPane.add(btnExit, 22, 17);
 
 
         // Deposit Button Action
@@ -271,6 +274,8 @@ public class CashMachineApp extends Application {
                     "$$$$$$$$$$$$$$$  Use the menu to select another account  $$$$$$$$$$$$$$$\n" +
                     "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n" +
                     "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+            menu.setText("Select an Account");
+            btnResetPin.setDisable(true);
         });
 
 
@@ -339,6 +344,7 @@ public class CashMachineApp extends Application {
     private void newAccountGridPaneSetUp() {
 
         setGridPaneConstraints(newAccountsGridPane);
+       // newAccountsGridPane.setGridLinesVisible(true);
 
         // Title Text
         title2.setFill(Color.GOLD);
@@ -389,7 +395,7 @@ public class CashMachineApp extends Application {
         // Back Button
         btnBack.setDisable(false);
         btnBack.setPrefWidth(155);
-        newAccountsGridPane.add(btnBack, 23, 18);
+        newAccountsGridPane.add(btnBack, 22, 18);
         newAccountMenuBar.requestFocus();
 
 
@@ -449,6 +455,11 @@ public class CashMachineApp extends Application {
             newAccountMenu.setText("Select an Account Type");
             btnWithdraw.setDisable(true);
             btnDeposit.setDisable(true);
+            menu.setText("Select an Account");
+            pinField.setDisable(true);
+            btnPin.setDisable(true);
+            withdrawField.setDisable(true);
+            depositField.setDisable(true);
             switchPanes();
 
         });
@@ -495,8 +506,15 @@ public class CashMachineApp extends Application {
             m.setOnAction(event -> {
                 currentAccount = Integer.parseInt(m.getText());
                 cashMachine.login(currentAccount);
+                menu.setText(currentAccount.toString());
                 pinField.setDisable(false);
                 btnPin.setDisable(false);
+                btnWithdraw.setDisable(true);
+                btnDeposit.setDisable(true);
+                withdrawField.setDisable(true);
+                depositField.setDisable(true);
+                btnResetPin.setDisable(true);
+                areaInfo.setText("Hello!  Thank you for using this Cara-Ca$h Machine.\nPlease enter your PIN.");
             });
             menu.getItems().add(m);
             menu.getItems().add(new SeparatorMenuItem());
