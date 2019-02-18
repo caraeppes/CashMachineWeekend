@@ -71,8 +71,10 @@ public class CashMachineApp extends Application {
     private PasswordField resetPinField = new PasswordField();
     private PasswordField confirmResetPinField = new PasswordField();
 
+
     /**
      * setGridPaneConstraints initializes the number of columns and rows for the GridPane and adds column and row restraints
+     *
      * @param gridPane
      */
     private void setGridPaneConstraints(GridPane gridPane) {
@@ -93,6 +95,30 @@ public class CashMachineApp extends Application {
 
 
     /**
+     * buttonSetUp is a method that sets the properties of all Button objects
+     */
+    public void buttonsSetUp() {
+        ArrayList<Button> buttons = new ArrayList<>();
+        buttons.add(btnPin);
+        buttons.add(btnEnterResetPin);
+        buttons.add(btnResetPin);
+        buttons.add(btnBack);
+        buttons.add(btnCreateAcct);
+        buttons.add(btnNewAcct);
+        buttons.add(btnDeposit);
+        buttons.add(btnWithdraw);
+        buttons.add(btnExit);
+
+        for (Button b : buttons) {
+            b.setBorder(buttonBorder);
+            b.setBackground(buttonBackground);
+            b.setDisable(true);
+            GridPane.setColumnSpan(b, 10);
+        }
+    }
+
+
+    /**
      * mainGridPaneSetUp is the method that adds all children to mainGridPane and sets their action responses
      */
     private void mainGridPaneSetUp() {
@@ -106,10 +132,8 @@ public class CashMachineApp extends Application {
 
 
         // New Account Button
-        btnNewAcct.setBorder(buttonBorder);
-        btnNewAcct.setBackground(buttonBackground);
-        GridPane.setColumnSpan(btnNewAcct, 22);
         btnNewAcct.setPrefWidth(160.0);
+        btnNewAcct.setDisable(false);
         mainGridPane.add(btnNewAcct, 12, 2);
 
 
@@ -138,10 +162,6 @@ public class CashMachineApp extends Application {
 
 
         // Pin Button
-        pinHint.setDisable(true);
-        btnPin.setBorder(buttonBorder);
-        btnPin.setBackground(buttonBackground);
-        GridPane.setColumnSpan(btnPin, 10);
         btnPin.setPrefWidth(80);
         mainGridPane.add(btnPin, 29, 4);
 
@@ -154,10 +174,6 @@ public class CashMachineApp extends Application {
 
 
         // Deposit Button
-        btnDeposit.setDisable(true);
-        btnDeposit.setBorder(buttonBorder);
-        btnDeposit.setBackground(buttonBackground);
-        GridPane.setColumnSpan(btnDeposit, 12);
         btnDeposit.setPrefWidth(95);
         mainGridPane.add(btnDeposit, 36, 6);
 
@@ -170,10 +186,6 @@ public class CashMachineApp extends Application {
 
 
         // Withdraw Button
-        btnWithdraw.setDisable(true);
-        btnWithdraw.setBorder(buttonBorder);
-        btnWithdraw.setBackground(buttonBackground);
-        GridPane.setColumnSpan(btnWithdraw, 12);
         btnWithdraw.setPrefWidth(95);
         mainGridPane.add(btnWithdraw, 36, 8);
 
@@ -187,12 +199,8 @@ public class CashMachineApp extends Application {
 
 
         // Reset Pin Button
-        btnResetPin.setDisable(true);
-        btnResetPin.setBorder(buttonBorder);
-        btnResetPin.setBackground(buttonBackground);
-        GridPane.setColumnSpan(btnResetPin, 12);
         btnResetPin.setPrefWidth(120);
-        mainGridPane.add(btnResetPin,22, 15);
+        mainGridPane.add(btnResetPin, 22, 15);
 
 
         // Reset Pin Field
@@ -206,17 +214,10 @@ public class CashMachineApp extends Application {
 
 
         // Reset Pin Enter Button
-        btnEnterResetPin.setDisable(true);
-        btnEnterResetPin.setBorder(buttonBorder);
-        btnEnterResetPin.setBackground(buttonBackground);
-        GridPane.setColumnSpan(btnEnterResetPin, 11);
         btnEnterResetPin.setPrefWidth(110);
 
 
         // Exit Button
-        btnExit.setBorder(buttonBorder);
-        btnExit.setBackground(buttonBackground);
-        GridPane.setColumnSpan(btnExit, 10);
         btnExit.setPrefWidth(97);
         mainGridPane.add(btnExit, 23, 17);
 
@@ -285,24 +286,23 @@ public class CashMachineApp extends Application {
         // Enter Pin Button Action
         pinField.setOnMouseClicked(e -> pinHint.setVisible(true));
         btnPin.setOnAction(e -> {
-             cashMachine.checkPin(currentAccount, pinField.getText());
-             if (cashMachine.getError().equals("Error: Invalid PIN")){
-                 pinField.setText("");
-                 areaInfo.setText(cashMachine.toString());
-             }
-             else {
-                 areaInfo.setText(cashMachine.toString());
-                 pinField.setText("");
-                 pinHint.setVisible(false);
-                 withdrawField.setDisable(false);
-                 btnWithdraw.setDisable(false);
-                 depositField.setDisable(false);
-                 btnDeposit.setDisable(false);
-                 pinField.setDisable(true);
-                 btnPin.setDisable(true);
-                 btnResetPin.setDisable(false);
-                 areaInfo.requestFocus();
-             }
+            cashMachine.checkPin(currentAccount, pinField.getText());
+            if (cashMachine.getError().equals("Error: Invalid PIN")) {
+                pinField.setText("");
+                areaInfo.setText(cashMachine.toString());
+            } else {
+                areaInfo.setText(cashMachine.toString());
+                pinField.setText("");
+                pinHint.setVisible(false);
+                withdrawField.setDisable(false);
+                btnWithdraw.setDisable(false);
+                depositField.setDisable(false);
+                btnDeposit.setDisable(false);
+                pinField.setDisable(true);
+                btnPin.setDisable(true);
+                btnResetPin.setDisable(false);
+                areaInfo.requestFocus();
+            }
         });
 
 
@@ -318,14 +318,12 @@ public class CashMachineApp extends Application {
 
         // Reset PIN Enter Button Action
         btnEnterResetPin.setOnAction(event -> {
-            if (resetPinField.getText().length() != 4){
+            if (resetPinField.getText().length() != 4) {
                 areaInfo.setText("PIN must be 4 digits");
-            }
-            else if (!resetPinField.getText().equals(confirmResetPinField.getText())){
+            } else if (!resetPinField.getText().equals(confirmResetPinField.getText())) {
                 areaInfo.setText("PINs do not match.  Try again.");
-            }
-            else {
-                cashMachine.resetPin(currentAccount,resetPinField.getText());
+            } else {
+                cashMachine.resetPin(currentAccount, resetPinField.getText());
                 areaInfo.setText("Pin has been reset.\n" + cashMachine.toString());
                 resetPinField.setText("");
                 confirmResetPinField.setText("");
@@ -373,12 +371,11 @@ public class CashMachineApp extends Application {
         GridPane.setColumnSpan(confirmPinField, 10);
         newAccountsGridPane.add(confirmPinField, 22, 10);
 
+
         // Create Account Button
-        btnCreateAcct.setBorder(buttonBorder);
-        btnCreateAcct.setBackground(buttonBackground);
-        GridPane.setColumnSpan(btnCreateAcct, 19);
+        btnCreateAcct.setDisable(false);
         btnCreateAcct.setPrefWidth(180);
-        newAccountsGridPane.add(btnCreateAcct, 20, 12);
+        newAccountsGridPane.add(btnCreateAcct, 22, 12);
 
 
         // New Account Text Area
@@ -390,11 +387,9 @@ public class CashMachineApp extends Application {
 
 
         // Back Button
-        btnBack.setBorder(buttonBorder);
-        btnBack.setBackground(buttonBackground);
-        GridPane.setColumnSpan(btnBack, 14);
+        btnBack.setDisable(false);
         btnBack.setPrefWidth(155);
-        newAccountsGridPane.add(btnBack, 21, 18);
+        newAccountsGridPane.add(btnBack, 23, 18);
         newAccountMenuBar.requestFocus();
 
 
@@ -420,21 +415,15 @@ public class CashMachineApp extends Application {
         btnCreateAcct.setOnAction(e -> {
             if (nameField.getText().equals("")) {
                 newAccountText.setText("Please enter your name to create a new account.");
-            }
-            else if (emailField.getText().equals("")) {
+            } else if (emailField.getText().equals("")) {
                 newAccountText.setText("Please enter your email address to create a new account.");
-            }
-            else if ((!basicAccount.isSelected()) && (!premiumAccount.isSelected())) {
+            } else if ((!basicAccount.isSelected()) && (!premiumAccount.isSelected())) {
                 newAccountText.setText("Please select a basic or premium account.");
-            }
-            else if(setPinField.getText().length() != 4) {
+            } else if (setPinField.getText().length() != 4) {
                 newAccountText.setText("Please enter a 4 digit PIN");
-            }
-
-            else if (!setPinField.getText().equals(confirmPinField.getText())){
+            } else if (!setPinField.getText().equals(confirmPinField.getText())) {
                 newAccountText.setText("PINs do not match.  Try again.");
-            }
-            else {
+            } else {
                 Random r = new Random();
                 int newAccountNumber = r.nextInt(999999999 - 111111111) + 111111111;
                 if (basicAccount.isSelected()) {
@@ -458,6 +447,8 @@ public class CashMachineApp extends Application {
             emailField.clear();
             newAccountText.clear();
             newAccountMenu.setText("Select an Account Type");
+            btnWithdraw.setDisable(true);
+            btnDeposit.setDisable(true);
             switchPanes();
 
         });
@@ -515,9 +506,11 @@ public class CashMachineApp extends Application {
 
     /**
      * createContent is a method that calls the setUp methods for the VBox and GridPanes
+     *
      * @return the set up VBox
      */
     private Parent createContent() {
+        buttonsSetUp();
         mainGridPaneSetUp();
         newAccountGridPaneSetUp();
         vboxSetUp();
@@ -527,6 +520,7 @@ public class CashMachineApp extends Application {
 
     /**
      * start is a method that create Scene with the VBox content and sets the Scene for the Stage
+     *
      * @param stage - a Stage object for all Children objects
      * @throws Exception
      */
@@ -539,6 +533,7 @@ public class CashMachineApp extends Application {
 
     /**
      * main is a method that launches the program
+     *
      * @param args
      */
     public static void main(String[] args) {
